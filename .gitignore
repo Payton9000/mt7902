@@ -1,3 +1,4 @@
+# kbuild output
 *.o
 *.o.cmd
 *.o.d
@@ -7,7 +8,44 @@
 *.mod.c
 *.mod.o
 *.mod.cmd
+*.cmd
+.*.cmd
+.*.d
+.*.o.d
+*.d
 Module.symvers
 modules.order
 .modules.order.cmd
 .Module.symvers.cmd
+.tmp_*
+.tmp_*.d
+*.tmp
+.cache.mk
+*.symvers
+*.order
+
+# prebuilt artifacts: build them against your own kernel instead
+/*.ko
+/build/
+
+# verification output
+*.before-dummyfix
+*.before-viffix
+*.patch.orig
+*.rej
+*.orig
+
+# local state written by the helper scripts
+/var-tmp-*
+*.state
+*.log
+
+# NOTE: firmware/*.bin is intentionally tracked, exactly as in upstream. Both files are
+# required by `make install_fw`, and linux-firmware redistributes them under MediaTek's
+# own "redistributable, no modification permitted" terms. Do not add them here.
+
+# editor / OS
+.vscode/
+.idea/
+*.swp
+.DS_Store
