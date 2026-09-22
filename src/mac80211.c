@@ -869,8 +869,16 @@ struct mt76_phy *mt76_vif_phy(struct ieee80211_hw *hw,
 		return hw->priv;
 #endif
 
+	/*
+	 * MT7902 fix (hmtheboy154/mt7902 issue #11):
+	 * single-radio / early STA events have no chanctx assigned yet;
+	 * returning NULL makes callers fail with -EINVAL (-22), which shows
+	 * up as "failed to insert STA entry for the AP (error -22)" and
+	 * breaks association. Return the default PHY instead — same as the
+	 * kernel >= 6.15 multi-radio path above.
+	 */
 	if (!mlink->ctx)
-		return NULL;
+		return hw->priv;
 
 	ctx = (struct mt76_chanctx *)mlink->ctx->drv_priv;
 	return ctx->phy;
